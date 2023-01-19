@@ -1,0 +1,67 @@
+{
+  "description": "The new user form config",
+  "controls": {
+    "displayName": {
+      "controlType": "input",
+      "type": "text",
+      "label": "Full Name",
+      "value": "",
+      "validators": {
+        "required": true,
+        "minLength": 2,
+        "banWords": ["Test", "Dummy"]
+      }
+    },
+    "email": {
+      "controlType": "input",
+      "type": "email",
+      "label": "Email",
+      "value": "",
+      "validators": {
+        "email": true
+      }
+    },
+    "role": {
+      "controlType": "select",
+      "label": "User Role",
+      "value": "",
+      "options": [
+        { "label": "Admin", "value": "admin" },
+        { "label": "Editor", "value": "editor" },
+        { "label": "Guest", "value": "guest" }
+      ]
+    },
+    "socialProfiles": {
+      "controlType": "group",
+      "label": "Links to Social Profiles",
+      "controls": {
+        "youtube": {
+          "controlType": "input",
+          "label": "YouTube",
+          "value": null,
+          "type": "text"
+        },
+        "twitter": {
+          "controlType": "input",
+          "label": "Twitter",
+          "value": null,
+          "type": "text"
+        },
+        "instagram": {
+          "controlType": "input",
+          "label": "Instagram",
+          "value": null,
+          "type": "text"
+        }
+      }
+    },
+    "terms": {
+      "controlType": "checkbox",
+      "label": "Terms & Conditions were accepted",
+      "value": false,
+      "validators": {
+        "requiredTrue": true
+      }
+    }
+  }
+}
