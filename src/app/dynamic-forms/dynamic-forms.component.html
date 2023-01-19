@@ -3,4 +3,11 @@
   <button (click)="formLoadingTrigger$.next('company')" type="button">Load Company Form</button>
 </div>
 <div *ngIf="formConfig$ | async as formConfig" class="dynamic-form-container">
+  <form>
+    <h3 class="form-heading">{{ formConfig.description }}</h3>
+
+    <div class="form-field" *ngFor="let control of formConfig.controls | keyvalue">
+      <label [for]="control.key">{{ control.key }}</label>
+    </div>
+  </form>
 </div>
