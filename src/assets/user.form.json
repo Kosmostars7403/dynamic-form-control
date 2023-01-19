@@ -8,8 +8,7 @@
       "value": "",
       "validators": {
         "required": true,
-        "minLength": 2,
-        "banWords": ["Test", "Dummy"]
+        "minLength": 2
       }
     },
     "email": {
