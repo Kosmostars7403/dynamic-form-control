@@ -1,18 +1,20 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {ReactiveFormsModule} from '@angular/forms';
+import {BaseDynamicControl} from './base-dynamic-control';
 
 @Component({
   selector: 'app-dynamic-select',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   template: `
-    <p>
-      dynamic-select works!
-    </p>
-  `,
-  styles: [
-  ]
+    <ng-container [formGroup]="formGroup">
+      <label [for]="control.controlKey">{{control.config.label}}</label>
+      <select [formControlName]="control.controlKey" [id]="control.controlKey" [value]="control.config.value">
+        <option *ngFor="let option of control.config.options" [value]="option.value">{{option.label}}</option>
+      </select>
+    </ng-container>
+  `
 })
-export class DynamicSelectComponent {
-
+export class DynamicSelectComponent extends BaseDynamicControl {
 }

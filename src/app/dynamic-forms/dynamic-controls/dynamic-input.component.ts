@@ -1,22 +1,20 @@
-import {Component, inject} from '@angular/core';
+import {Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {CONTROL_DATA} from '../control-data.token';
+import {ReactiveFormsModule} from '@angular/forms';
+import {BaseDynamicControl} from './base-dynamic-control';
 
 @Component({
   selector: 'app-dynamic-input',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   template: `
-    <input [value]="controlData.config.value" [id]="controlData.controlKey" [type]="controlData.config.type">
+    <ng-container [formGroup]="formGroup">
+      <label [for]="control.controlKey">{{control.config.label}}</label>
+      <input [formControlName]="control.controlKey" [value]="control.config.value" [id]="control.controlKey" [type]="control.config.type">
+    </ng-container>
   `,
   styles: [
   ]
 })
-export class DynamicInputComponent {
-
-  controlData = inject(CONTROL_DATA)
-
-  constructor() {
-  }
-
+export class DynamicInputComponent extends BaseDynamicControl {
 }
