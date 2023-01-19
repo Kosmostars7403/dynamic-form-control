@@ -1,6 +1,6 @@
 import { Component, HostBinding, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BaseDynamicControl } from './base-dynamic-control';
+import { BaseDynamicControl, comparatorFn, dynamicControlProvider } from './base-dynamic-control';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ControlInjectorPipe } from '../control-injector.pipe';
 import { DynamicControlResolver } from '../dynamic-control-resolver.service';
@@ -9,17 +9,16 @@ import { DynamicControlResolver } from '../dynamic-control-resolver.service';
   selector: 'app-dynamic-group',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, ControlInjectorPipe],
+  viewProviders: [dynamicControlProvider],
   template: `
-    <ng-container [formGroup]="formGroup">
-      <fieldset [formGroupName]="control.controlKey">
-        <legend>{{control.config.label}}</legend>
-        <ng-container *ngFor="let control of control.config.controls | keyvalue">
-<!--        <ng-container-->
-<!--          [ngComponentOutlet]="controlResolver.resolve(control.value.controlType) | async"-->
-<!--          [ngComponentOutletInjector]="control.key | controlInjector:control.value"></ng-container>-->
-        </ng-container>
-      </fieldset>
-    </ng-container>
+    <fieldset [formGroupName]="control.controlKey">
+      <legend>{{control.config.label}}</legend>
+      <ng-container *ngFor="let control of control.config.controls | keyvalue: comparatorFn">
+      <ng-container
+        [ngComponentOutlet]="controlResolver.resolve(control.value.controlType) | async"
+        [ngComponentOutletInjector]="control.key | controlInjector:control.value"></ng-container>
+      </ng-container>
+    </fieldset>
   `,
   styles: [
   ]
@@ -27,4 +26,5 @@ import { DynamicControlResolver } from '../dynamic-control-resolver.service';
 export class DynamicGroupComponent extends BaseDynamicControl {
   @HostBinding('class') override hostClass = 'form-field-group';
   controlResolver = inject(DynamicControlResolver);
+  protected comparatorFn = comparatorFn;
 }
